@@ -1,0 +1,33 @@
+# Vigenere Cipher. A code created during course on freeCodeCamp.
+# The objective of that course was to understand better the methods to operate on strings, but the cipher itself was very interesting, 
+# so I tried to explain to myself and understand the code.
+# The Vigenere Cipher is a cipher where each letter of a message is replaced by a different letter of the alphabet. The shift - the difference between the position
+# in the alphabet of the letter in the message and the position in alphabet of the letter that will be used for replacement - isn't always the same and to calculate it
+# there is a need of the key.
+
+text = 'Hello Zaira' # The message that will be encrypted.
+custom_key = 'python' # The key that will be used for encryption.
+def vigenere(message, key, direction): # Definition of the funcion that takes 3 arguments. Direction - permits to cipher (when +1) or decipher (when -1).
+    key_index = 0 # Will be used to iterate on the letters of the key word 'python'.
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    encrypted_text = ''
+
+    for char in message.lower(): # Let's iterate on each character in the passed message, turned into lower case.
+    
+        # In this version of the cipher, if there's a space - it will be preseved.
+        if char == ' ':
+            encrypted_text += char # Space is added to the encrypted message.
+        else:        
+            key_char = key[key_index % len(key)] # During the first iteration take the first letter of the key
+            # - because key_index was set to 0. If there's more iterations than the letters in the key word, it goes back to the first letter,
+            # thanks to using the modulo operation.
+            key_index += 1 # Next time iterate on the next letter of the key word.
+
+            # The shift is calculated here.
+            offset = alphabet.index(key_char) # It takes the position in the alphabet of the letter from the key word in this iteration.
+            index = alphabet.find(char) # It takes the position in the alphabet of the letter from the message in this iteration.
+            new_index = (index + offset*direction) % len(alphabet) # It sums up the two to get the shift value. We can manipulate the direction to decrypt.
+            # Again thanks to modulo operation, if the new index surpasses the number of letters in the alphabet, it starts to count from its beginning.
+            encrypted_text += alphabet[new_index] # It adds the newly encrypted letter to the final result of encryption.
+    
+    return encrypted_text
