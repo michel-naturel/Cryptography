@@ -1,0 +1,19 @@
+# Caesar Cipher. Created during freeCodeAcademy course on 19-08-2024.
+# Caesar Cipher enables to code a piece of text by replacing each letter of the text by a letter which is a certain number of positions further in the alphabet.
+
+text = 'Hello Zaira'
+shift = 3
+
+def caesar(message, offset):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    encrypted_text = ''
+
+    for char in message.lower():
+        if char == ' ':
+            encrypted_text += char
+        else:
+            index = alphabet.find(char)
+            new_index = (index + offset) % len(alphabet)
+            encrypted_text += alphabet[new_index]
+    print('plain text:', message)
+    print('encrypted text:', encrypted_text)
