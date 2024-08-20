@@ -7,16 +7,16 @@
 
 text = 'Hello Zaira' # The message that will be encrypted.
 custom_key = 'python' # The key that will be used for encryption.
-def vigenere(message, key, direction): # Definition of the funcion that takes 3 arguments. Direction - permits to cipher (when +1) or decipher (when -1).
+def vigenere(message, key, direction=1): # Definition of the funcion that takes 3 arguments. Direction - permits to cipher (when +1) or decipher (when -1).
     key_index = 0 # Will be used to iterate on the letters of the key word 'python'.
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     encrypted_text = ''
 
     for char in message.lower(): # Let's iterate on each character in the passed message, turned into lower case.
     
-        # In this version of the cipher, if there's a space - it will be preseved.
-        if char == ' ':
-            encrypted_text += char # Space is added to the encrypted message.
+        # In this version of the cipher, if there's a space or non-alphanumeric character - it will be preseved.
+        if not char.isalpha():
+            encrypted_text += char # It is added to the encrypted message.
         else:        
             key_char = key[key_index % len(key)] # During the first iteration take the first letter of the key
             # - because key_index was set to 0. If there's more iterations than the letters in the key word, it goes back to the first letter,
@@ -31,3 +31,14 @@ def vigenere(message, key, direction): # Definition of the funcion that takes 3 
             encrypted_text += alphabet[new_index] # It adds the newly encrypted letter to the final result of encryption.
     
     return encrypted_text
+
+def encrypt(message, key):
+    return vigenere(message, key)
+    
+def decrypt(message, key):
+    return vigenere(message, key, -1)
+    
+encryption = encrypt(text, custom_key)
+print(encryption)
+decryption = decrypt(encryption, custom_key)
+print(decryption)
